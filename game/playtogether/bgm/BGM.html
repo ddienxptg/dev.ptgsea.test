@@ -38,6 +38,7 @@
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
+        .nav-links-wrapper { display: flex; justify-content: center; width: 100%; }
         .top-navbar-container ul {
             list-style: none; padding: 0; margin: 0;
             display: flex; gap: 24px; align-items: center;
@@ -47,16 +48,15 @@
             font-size: 0.95rem; transition: color 0.2s;
         }
         .top-navbar-container li a:hover { color: #ff66a3; }
-        
         .home-icon-img {
             background: #ff66a3; color: #fff !important; padding: 2px 10px;
             border-radius: 6px; font-size: 0.85rem; text-transform: uppercase;
         }
 
         @media (max-width: 767.98px) {
-            .top-navbar-container { overflow-x: auto; justify-content: flex-start; padding: 0 15px; }
-            .top-navbar-container::-webkit-scrollbar { display: none; }
-            .top-navbar-container ul { gap: 18px; white-space: nowrap; }
+            .nav-links-wrapper { overflow-x: auto; justify-content: flex-start; padding: 0 15px; }
+            .nav-links-wrapper::-webkit-scrollbar { display: none; }
+            .top-navbar-container ul { gap: 16px; white-space: nowrap; }
         }
 
         /* --- MAIN CONTAINER --- */
@@ -74,7 +74,7 @@
             backdrop-filter: blur(5px);
         }
 
-        /* --- BÊN TRÁI: PLAYER --- */
+        /* --- PLAYER LEFT --- */
         .player-left {
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             padding: 15px 25px 25px 25px; 
@@ -82,9 +82,7 @@
         }
 
         .disc-wrapper {
-            position: relative; 
-            width: 100%; max-width: 250px; 
-            aspect-ratio: 1 / 1;
+            position: relative; width: 100%; max-width: 250px; aspect-ratio: 1 / 1;
             border-radius: 50%; padding: 8px;
             background: linear-gradient(145deg, #222, #050505);
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
@@ -94,63 +92,81 @@
             width: 100%; height: 100%; border-radius: 50%;
             background: repeating-radial-gradient(circle, #2a2a2a, #111 2px, #2a2a2a 4px);
             display: flex; align-items: center; justify-content: center;
-            position: relative;
         }
 
-        .disc-art {
-            width: 46%; height: 46%; border-radius: 50%;
-            object-fit: cover; border: 3px solid #000;
-        }
+        .disc-art { width: 46%; height: 46%; border-radius: 50%; object-fit: cover; border: 3px solid #000; }
+        .disc-center { position: absolute; width: 6%; height: 6%; background: #fff; border-radius: 50%; border: 2px solid #333; z-index: 5; }
 
-        .disc-center {
-            position: absolute; width: 6%; height: 6%; background: #fff;
-            border-radius: 50%; border: 2px solid #333; z-index: 5;
-        }
-
-        @keyframes rotateDisc {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-        .is-playing {
-            animation: rotateDisc 4.5s linear infinite;
-        }
+        @keyframes rotateDisc { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .is-playing { animation: rotateDisc 4.5s linear infinite; }
 
         .track-info { text-align: center; margin-top: 20px; width: 100%; }
         .track-title { font-size: clamp(1.15rem, 2.5vw, 1.35rem); font-weight: bold; color: #d63384; margin-bottom: 6px; }
         .event-badge { font-size: 0.85rem; background: #ff66a3; color: #fff; padding: 4px 14px; border-radius: 15px; display: inline-block; }
 
-        /* --- BÊN PHẢI: PLAYLIST --- */
+        /* --- PLAYLIST RIGHT --- */
         .playlist-right { padding: 15px 15px 15px 30px; }
-        .playlist-title { font-size: 1.15rem; font-weight: bold; margin-bottom: 15px; color: #495057; letter-spacing: 0.5px; }
-        
-        .playlist-scroll { max-height: 310px; overflow-y: auto; padding-right: 8px; }
+        .playlist-header-container {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 15px; flex-wrap: wrap; gap: 10px;
+        }
+        .playlist-title { font-size: 1.15rem; font-weight: bold; color: #495057; letter-spacing: 0.5px; margin: 0; }
+         
+        .music-tabs-wrapper { display: flex; gap: 8px; }
+        .music-tab-btn {
+            background: #f1f3f5; color: #495057; border: 1px solid #dee2e6;
+            padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; font-weight: bold;
+            cursor: pointer; transition: all 0.2s ease;
+        }
+        .music-tab-btn:hover { background: #ffe6f0; color: #ff66a3; border-color: #ff66a3; }
+        .music-tab-btn.tab-active { background: #ff66a3; color: #fff; border-color: #ff66a3; box-shadow: 0 2px 5px rgba(255, 102, 163, 0.3); }
+
+        .playlist-scroll { max-height: 410px; overflow-y: auto; padding-right: 8px; min-height: 200px; }
         .playlist-scroll::-webkit-scrollbar { width: 5px; }
         .playlist-scroll::-webkit-scrollbar-thumb { background: rgba(255, 102, 163, 0.5); border-radius: 10px; }
+
+        .song-container-block { margin-bottom: 12px; display: flex; flex-direction: column; }
 
         .song-item {
             display: flex; align-items: center; justify-content: space-between;
             padding: 12px 16px; border-radius: 12px; background: #fff;
-            margin-bottom: 12px; border: 1px solid rgba(0,0,0,0.05); cursor: pointer;
+            border: 1px solid rgba(0,0,0,0.05); cursor: pointer;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .song-item:hover { background: #fff0f5; border-color: #ff66a3; transform: translateY(-1px); }
-        .song-item.active { background: #ff66a3; color: #fff; border-color: #ff66a3; box-shadow: 0 4px 12px rgba(255, 102, 163, 0.3); }
+        .song-item:hover { background: #fff0f5; border-color: #ff66a3; transform: translateX(2px); }
+        .song-item.active { background: #ff66a3; color: #fff; border-color: #ff66a3; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; }
         .song-item.active .song-event-name { color: rgba(255,255,255,0.85); }
 
         .song-item.locked {
-            background: #f1f3f5 !important;
-            color: #adb5bd !important;
-            opacity: 0.65;
-            cursor: not-allowed !important;
-            pointer-events: none;
-            border-color: #dee2e6 !important;
+            background: #f1f3f5 !important; color: #adb5bd !important; opacity: 0.65;
+            cursor: not-allowed !important; pointer-events: none; border-color: #dee2e6 !important;
         }
-        .song-item.locked:hover { transform: none; }
         .song-item.locked .song-event-name { color: #ced4da !important; }
 
         .song-meta { display: flex; flex-direction: column; gap: 2px; }
         .song-name { font-weight: bold; font-size: 0.95rem; }
         .song-event-name { font-size: 0.8rem; color: #6c757d; }
+
+        /* KHUNG DOWNLOAD */
+        .inner-download-box {
+            display: none; background: #fffdfd; border: 1px solid #ff66a3;
+            border-top: none; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px;
+            padding: 10px 16px; text-align: left;
+            animation: slideDown 0.2s ease-out;
+        }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .btn-download-action {
+            background: #ff85b3; color: #fff !important; border: none; padding: 5px 18px;
+            border-radius: 20px; font-size: 0.8rem; font-weight: bold;
+            text-decoration: none !important; display: inline-flex; align-items: center; gap: 6px;
+            box-shadow: 0 3px 0 #d65c8a; transition: all 0.1s ease; margin-top: 4px; cursor: pointer;
+        }
+        .btn-download-action:hover { background: #ff6b9e; transform: translateY(-1px); box-shadow: 0 4px 0 #d65c8a; }
+        .btn-download-action:active { transform: translateY(1px); box-shadow: 0 0px 0 #fff; }
+        .btn-download-action.loading { background: #ced4da !important; box-shadow: 0 3px 0 #adb5bd !important; cursor: wait; }
+
+        .download-icon { width: 16px; height: 16px; fill: #fff; }
 
         /* --- CONTROLS --- */
         .audio-controls { display: flex; gap: 16px; justify-content: center; margin-top: 15px; width: 100%; }
@@ -170,7 +186,9 @@
             .radio-card { padding: 15px; border-radius: 20px; }
             .player-left { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.08); padding: 10px 10px 20px 10px; }
             .playlist-right { padding: 20px 10px 10px 10px; }
-            .playlist-scroll { max-height: 240px; }
+            .playlist-header-container { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .music-tabs-wrapper { width: 100%; justify-content: flex-start; }
+            .playlist-scroll { max-height: 280px; }
             .disc-wrapper { max-width: 180px; }
         }
     </style>
@@ -180,19 +198,21 @@
     <div class="bg-overlay"></div>
 
     <div class="top-navbar-container">
-        <ul>
-            <li><a href="https://playtogether.vnggames.com/" title="Home"><span class="home-icon-img" id="menu-home">Home</span></a></li>
-            <li><a href="https://playtogether.vnggames.com/tin-tuc/tin-tuc.1.html" id="menu-news">Tin tức</a></li>
-            <li class="has-arrow"><a href="https://playtogether.vnggames.com/tin-tuc/gioi-thieu/gioi-thieu-play-together.html" id="menu-intro">Giới thiệu</a></li>
-            <li><a href="https://playtogether.vnggames.com/tin-tuc/huong-dan.1.html" id="menu-guide">Hướng dẫn</a></li>
-            <li class="has-arrow"><a href="https://playtogether.vnggames.com/" id="menu-community">Cộng đồng</a></li>
-            <li><a href="https://support.vnggames.com/products/play-together-vng-297-4557fa50422acf14f926e500d7687cff/problems" id="menu-support">Hỗ trợ</a></li>
-        </ul>
+        <div class="nav-links-wrapper">
+            <ul>
+                <li><a href="https://playtogether.vnggames.com/" title="Home"><span class="home-icon-img" id="menu-home">Home</span></a></li>
+                <li><a href="https://playtogether.vnggames.com/tin-tuc/tin-tuc.1.html" id="menu-news">Tin tức</a></li>
+                <li class="has-arrow"><a href="https://playtogether.vnggames.com/tin-tuc/gioi-thieu/gioi-thieu-play-together.html" id="menu-intro">Giới thiệu</a></li>
+                <li><a href="https://playtogether.vnggames.com/tin-tuc/huong-dan.1.html" id="menu-guide">Hướng dẫn</a></li>
+                <li class="has-arrow"><a href="https://playtogether.vnggames.com/" id="menu-community">Cộng đồng</a></li>
+                <li><a href="https://support.vnggames.com/products/play-together-vng-297-4557fa50422acf14f926e500d7687cff/problems" id="menu-support">Hỗ trợ</a></li>
+            </ul>
+        </div>
     </div>
 
     <div class="main-container">
         <div class="radio-card row g-0">
-            
+             
             <div class="col-12 col-md-5 player-left">
                 <div class="disc-wrapper">
                     <div class="disc-vinyl">
@@ -200,7 +220,7 @@
                         <img src="" class="disc-art" id="disc-img">
                     </div>
                 </div>
-                
+                 
                 <div class="track-info">
                     <div class="track-title" id="current-title">Loading...</div>
                     <span class="event-badge" id="current-event">Event</span>
@@ -214,7 +234,13 @@
             </div>
 
             <div class="col-12 col-md-7 playlist-right">
-                <div class="playlist-title" id="playlist-header">DANH SÁCH BÀI HÁT SỰ KIỆN</div>
+                <div class="playlist-header-container">
+                    <div class="playlist-title" id="playlist-header">DANH SÁCH BÀI HÁT</div>
+                    <div class="music-tabs-wrapper">
+                        <button class="music-tab-btn tab-active" id="tab-event" onclick="switchCategory('event')">Nhạc Sự Kiện</button>
+                        <button class="music-tab-btn" id="tab-farm" onclick="switchCategory('farm')">Nhạc Nông Trại</button>
+                    </div>
+                </div>
                 <div class="playlist-scroll" id="songs-list-box"></div>
             </div>
 
@@ -224,48 +250,84 @@
     <audio id="main-audio-player" style="display:none;"></audio>
 
     <script>
-        // CẬP NHẬT TOÀN BỘ LINK ASSETS MỚI & MÃ HÓA URL TRÁNH LỖI PHÁT NHẠC TRÊN MOBILE
         const radioLocalization = {
             "Vietnamese": {
-                "playlistTitle": "DANH SÁCH BÀI HÁT SỰ KIỆN",
+                "playlistTitle": "DANH SÁCH BÀI HÁT", "downloadBtn": "Tải xuống nhạc", "downloading": "Đang tải về...",
+                "tabEvent": "Nhạc Sự Kiện", "tabFarm": "Nhạc Nông Trại",
                 "menu": { "home": "Home", "news": "Tin tức", "intro": "Giới thiệu", "guide": "Hướng dẫn", "community": "Cộng đồng", "support": "Hỗ trợ" },
                 "tracks": [
-                    { "name": "[Sự kiện Mưa Sao Băng]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "displayTitle": "[Sự kiện Mưa Sao Băng]", "displaySub": "v2.27 - 28/05/2026", "isLocked": false },
-                    { "name": "[Sự kiện Thử Thách Vua Sushi]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "displayTitle": "[Sự kiện Thử Thách Vua Sushi]", "displaySub": "V2.27 - 14/05/2026", "isLocked": false },
-                    { "name": "Đang chờ...", "event": "v2.28 - Đang chờ...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "displayTitle": "Đang chờ...", "displaySub": "v2.28 - Đang chờ...", "isLocked": true }
+                    { "name": "[Sự kiện Mưa Sao Băng]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "category": "event", "isLocked": false },
+                    { "name": "[Sự kiện Thử Thách Vua Sushi]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "category": "event", "isLocked": false },
+                    { "name": "Đang chờ...", "event": "v2.28 - Đang chờ...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "category": "event", "isLocked": true },
+                     
+                    /* ĐÃ SỬA LINK ART VỀ ĐÚNG FARM CHO TOÀN BỘ NHẠC NÔNG TRẠI */
+                    { "name": "Nhạc Nông Trại - Mặc Định", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm.wav", "category": "farm", "isLocked": false },
+                    { "name": "Nhạc Nông Trại - Cực Quang", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_aurora.wav", "category": "farm", "isLocked": false },
+                    { "name": "Nhạc Nông Trại - Công Nghệ", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_digital.wav", "category": "farm", "isLocked": false },
+                    { "name": "Nhạc Nông Trại - Huyền Ảo", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_fantasy.wav", "category": "farm", "isLocked": false },
+                    { "name": "Nhạc Nông Trại - Vườn Hoa", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_flower.wav", "category": "farm", "isLocked": false },
+                    { "name": "Nhạc Nông Trại - Ánh Trăng", "event": "Khu Vực Nông Trại", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_moonlight.wav", "category": "farm", "isLocked": false }
                 ]
             },
             "Thai": {
-                "playlistTitle": "รายการเพลงกิจกรรม",
+                "playlistTitle": "รายการเพลงกิจกรรม", "downloadBtn": "ดาวน์โหลดเพลง", "downloading": "กำลังดาวน์โหลด...",
+                "tabEvent": "เพลงกิจกรรม", "tabFarm": "เพลงฟาร์ม",
                 "menu": { "home": "หน้าแรก", "news": "ข่าวสาร", "intro": "แนะนำเกม", "guide": "คู่มือแนะนำ", "community": "ชุมชน", "support": "สนับสนุน" },
                 "tracks": [
-                    { "name": "[กิจกรรม ฝนดาวตก]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "displayTitle": "[กิจกรรม ฝนดาวตก]", "displaySub": "v2.27 - 28/05/2026", "isLocked": false },
-                    { "name": "[กิจกรรม ท้าทายราชาซูชิ]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "displayTitle": "[กิจกรรม ท้าทายราชาซูชิ]", "displaySub": "V2.27 - 14/05/2026", "isLocked": false },
-                    { "name": "โปรดรอ...", "event": "v2.28 - โปรดรอ...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "displayTitle": "โปรดรอ...", "displaySub": "v2.28 - โปรดรอ...", "isLocked": true }
-                ]
-            },
-            "Philippines": {
-                "playlistTitle": "PLAYLIST NG EVENT MGA KANTA",
-                "menu": { "home": "Home", "news": "Balita", "intro": "Panimula", "guide": "Gabay", "community": "Komunidad", "support": "Suporta" },
-                "tracks": [
-                    { "name": "[Pag-ulan ng Bulalakaw]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "displayTitle": "[Pag-ulan ng Bulalakaw]", "displaySub": "v2.27 - 28/05/2026", "isLocked": false },
-                    { "name": "[Hamon ng Sushi King]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "displayTitle": "[Hamon ng Sushi King]", "displaySub": "V2.27 - 14/05/2026", "isLocked": false },
-                    { "name": "Naghihintay...", "event": "v2.28 - Naghihintay...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "displayTitle": "Naghihintay...", "displaySub": "v2.28 - Naghihintay...", "isLocked": true }
+                    { "name": "[กิจกรรม ฝนดาวตก]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "category": "event", "isLocked": false },
+                    { "name": "[กิจกรรม ท้าทายราชาซูชิ]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "category": "event", "isLocked": false },
+                    { "name": "โปรดรอ...", "event": "v2.28 - โปรดรอ...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "category": "event", "isLocked": true },
+                     
+                    { "name": "เพลงฟาร์ม - เริ่มต้น", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm.wav", "category": "farm", "isLocked": false },
+                    { "name": "เพลงฟาร์ม - แสงเหนือ", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_aurora.wav", "category": "farm", "isLocked": false },
+                    { "name": "เพลงฟาร์ม - ดิจิตอล", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_digital.wav", "category": "farm", "isLocked": false },
+                    { "name": "เพลงฟาร์ม - แฟนตาซี", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_fantasy.wav", "category": "farm", "isLocked": false },
+                    { "name": "เพลงฟาร์ม - สวนดอกไม้", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_flower.wav", "category": "farm", "isLocked": false },
+                    { "name": "เพลงฟาร์ม - แสงจันทร์", "event": "โซนฟาร์ม", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_moonlight.wav", "category": "farm", "isLocked": false }
                 ]
             },
             "Indonesian": {
-                "playlistTitle": "DAFTAR PUTAR MUSIK ACARA",
+                "playlistTitle": "DAFTAR PUTAR MUSIK ACARA", "downloadBtn": "Unduh Musik", "downloading": "Mengunduh...",
+                "tabEvent": "Musik Acara", "tabFarm": "Musik Perkebunan",
                 "menu": { "home": "Beranda", "news": "Berita", "intro": "Pengenalan", "guide": "Panduan", "community": "Komunitas", "support": "Bantuan" },
                 "tracks": [
-                    { "name": "[Acara Hujan Meteor]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "displayTitle": "[Acara Hujan Meteor]", "displaySub": "v2.27 - 28/05/2026", "isLocked": false },
-                    { "name": "[Tantangan Raja Sushi]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "displayTitle": "[Tantangan Raja Sushi]", "displaySub": "V2.27 - 14/05/2026", "isLocked": false },
-                    { "name": "Menunggu...", "event": "v2.28 - Menunggu...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "displayTitle": "Menunggu...", "displaySub": "v2.28 - Menunggu...", "isLocked": true }
+                    { "name": "[Acara Hujan Meteor]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "category": "event", "isLocked": false },
+                    { "name": "[Tantangan Raja Sushi]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "category": "event", "isLocked": false },
+                    { "name": "Menunggu...", "event": "v2.28 - Menunggu...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "category": "event", "isLocked": true },
+                     
+                    { "name": "Musik Perkebunan - Default", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm.wav", "category": "farm", "isLocked": false },
+                    { "name": "Musik Perkebunan - Aurora", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_aurora.wav", "category": "farm", "isLocked": false },
+                    { "name": "Musik Perkebunan - Digital", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_digital.wav", "category": "farm", "isLocked": false },
+                    { "name": "Musik Perkebunan - Fantasy", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_fantasy.wav", "category": "farm", "isLocked": false },
+                    { "name": "Musik Perkebunan - Kebun Bunga", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_flower.wav", "category": "farm", "isLocked": false },
+                    { "name": "Musik Perkebunan - Cahaya Bulan", "event": "Area Perkebunan", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_moonlight.wav", "category": "farm", "isLocked": false }
+                ]
+            },
+            "Philippines": {
+                "playlistTitle": "PLAYLIST NG EVENT MGA KANTA", "downloadBtn": "I-download ang kanta", "downloading": "Nagda-download...",
+                "tabEvent": "Tugtog Event", "tabFarm": "Tugtog Bukid",
+                "menu": { "home": "Home", "news": "Balita", "intro": "Panimula", "guide": "Gabay", "community": "Komunidad", "support": "Suporta" },
+                "tracks": [
+                    { "name": "[Pag-ulan ng Bulalakaw]", "event": "v2.27 - 28/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_m%C6%B0a%20sao%20b%C4%83ng.wav", "category": "event", "isLocked": false },
+                    { "name": "[Hamon ng Sushi King]", "event": "V2.27 - 14/05/2026", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_thuthachvuasushi.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/event_th%E1%BB%AD%20th%C3%A1ch%20vua%20sushi.wav", "category": "event", "isLocked": false },
+                    { "name": "Naghihintay...", "event": "v2.28 - Naghihintay...", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/event_muasaobang.png", "src": "", "category": "event", "isLocked": true },
+                     
+                    { "name": "Farm Music - Default", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm.wav", "category": "farm", "isLocked": false },
+                    { "name": "Farm Music - Aurora", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_aurora.wav", "category": "farm", "isLocked": false },
+                    { "name": "Farm Music - Digital", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_digital.wav", "category": "farm", "isLocked": false },
+                    { "name": "Farm Music - Fantasy", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_fantasy.wav", "category": "farm", "isLocked": false },
+                    { "name": "Farm Music - Flower Garden", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_flower.wav", "category": "farm", "isLocked": false },
+                    { "name": "Farm Music - Moonlight", "event": "Farm Area", "bg": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "art": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/Farm.png", "src": "https://ddienxptg.github.io/dev.ptgsea.test/game/playtogether/source/bgm_myfarm_moonlight.wav", "category": "farm", "isLocked": false }
                 ]
             }
         };
 
         let currentTracksList = [];
+        let filteredTracks = [];
         let songIndex = 0;
+        let currentLocalKey = "Vietnamese";
+        let activeCategory = "event";
+
         const audioPlayer = document.getElementById('main-audio-player');
         const playBtn = document.getElementById('play-trigger');
         const discImg = document.getElementById('disc-img');
@@ -280,14 +342,20 @@
                 else if (browserLang.includes('id')) currentLang = 'Indonesian';
                 else if (browserLang.includes('fil') || browserLang.includes('tl')) currentLang = 'Philippines';
                 else currentLang = 'Vietnamese';
-                
+                 
                 window.location.search = `?lang=${currentLang}`;
                 return; 
             }
 
             if (!radioLocalization[currentLang]) currentLang = 'Vietnamese';
+            currentLocalKey = currentLang;
 
-            const local = radioLocalization[currentLang];
+            renderLocalizedUI();
+            loadSong(0, false);
+        }
+
+        function renderLocalizedUI() {
+            const local = radioLocalization[currentLocalKey];
             currentTracksList = local.tracks;
 
             document.getElementById('menu-home').innerText = local.menu.home;
@@ -298,53 +366,79 @@
             document.getElementById('menu-support').innerText = local.menu.support;
 
             document.getElementById('playlist-header').innerText = local.playlistTitle;
+            document.getElementById('tab-event').innerText = local.tabEvent;
+            document.getElementById('tab-farm').innerText = local.tabFarm;
 
+            renderPlaylist();
+        }
+
+        function renderPlaylist() {
+            filteredTracks = currentTracksList.filter(track => track.category === activeCategory);
+            const local = radioLocalization[currentLocalKey];
             const songsContainer = document.getElementById('songs-list-box');
-            songsContainer.innerHTML = currentTracksList.map((track, idx) => `
-                <div class="song-item ${track.isLocked ? 'locked' : ''}" id="song-${idx}" onclick="${track.isLocked ? '' : `selectSong(${idx})`}">
-                    <div class="song-meta">
-                        <span class="song-name">${track.name}</span>
-                        <span class="song-event-name">${track.event}</span>
+             
+            songsContainer.innerHTML = filteredTracks.map((track, idx) => `
+                <div class="song-container-block">
+                    <div class="song-item ${track.isLocked ? 'locked' : ''}" id="song-${idx}" onclick="${track.isLocked ? '' : `selectSong(${idx})`}">
+                        <div class="song-meta">
+                            <span class="song-name">${track.name}</span>
+                            <span class="song-event-name">${track.event}</span>
+                        </div>
+                        <span class="song-duration">${track.isLocked ? '🔒' : '🎵'}</span>
                     </div>
-                    <span class="song-duration">${track.isLocked ? '🔒' : '🎵'}</span>
+                    ${!track.isLocked ? `
+                        <div class="inner-download-box" id="dl-box-${idx}">
+                            <div class="btn-download-action" id="btn-dl-act-${idx}" onclick="forceDownloadMusic('${track.src}', '${track.name}.wav', ${idx})">
+                                <svg class="download-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 14H11V10H8l4-4 4 4h-3v6z"></path>
+                                </svg>
+                                <span id="btn-dl-text-${idx}">${local.downloadBtn}</span>
+                            </div>
+                        </div>
+                    ` : ''}
                 </div>
             `).join('');
+            
+            updatePlaylistActiveUI();
+        }
 
-            loadSong(0, false);
+        function updatePlaylistActiveUI() {
+            filteredTracks.forEach((_, idx) => {
+                const item = document.getElementById(`song-${idx}`);
+                const dlBox = document.getElementById(`dl-box-${idx}`);
+                if(item) {
+                    if(idx === songIndex) {
+                        item.classList.add('active');
+                        if(dlBox) dlBox.style.display = 'block';
+                    } else {
+                        item.classList.remove('active');
+                        if(dlBox) dlBox.style.display = 'none';
+                    }
+                }
+            });
         }
 
         function loadSong(index, shouldPlay = true) {
-            if (currentTracksList[index] && currentTracksList[index].isLocked) return;
+            if (filteredTracks.length === 0) return;
+            if (index < 0 || index >= filteredTracks.length) return;
 
             songIndex = index;
-            const currentTrack = currentTracksList[songIndex];
+            const track = filteredTracks[songIndex];
 
-            document.getElementById('current-title').innerText = currentTrack.displayTitle;
-            document.getElementById('current-event').innerText = currentTrack.displaySub;
-            
-            discImg.src = currentTrack.art;
-            document.body.style.background = `url('${currentTrack.bg}') no-repeat center center`;
-            audioPlayer.src = currentTrack.src;
+            document.getElementById('current-title').innerText = track.name;
+            document.getElementById('current-event').innerText = track.event;
+            discImg.src = track.art;
+            document.body.style.background = `url('${track.bg}') no-repeat`;
 
-            document.querySelectorAll('.song-item').forEach(el => el.classList.remove('active'));
-            const activeItem = document.getElementById(`song-${index}`);
-            if (activeItem) activeItem.classList.add('active');
+            audioPlayer.src = track.src;
 
-            if (shouldPlay) {
-                audioPlayer.play().catch(err => console.log("User interaction required"));
-                playBtn.innerText = "⏸";
-                discImg.classList.add('is-playing');
-            } else {
-                playBtn.innerText = "▶";
-                discImg.classList.remove('is-playing');
-            }
-        }
+            updatePlaylistActiveUI();
 
-        function togglePlay() {
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                playBtn.innerText = "⏸";
-                discImg.classList.add('is-playing');
+            if (shouldPlay && !track.isLocked && track.src) {
+                audioPlayer.play().then(() => {
+                    playBtn.innerText = "⏸";
+                    discImg.classList.add('is-playing');
+                }).catch(e => console.log("Playback interaction error:", e));
             } else {
                 audioPlayer.pause();
                 playBtn.innerText = "▶";
@@ -353,28 +447,87 @@
         }
 
         function selectSong(index) {
-            loadSong(index, true);
+            if(index === songIndex) {
+                togglePlay();
+            } else {
+                loadSong(index, true);
+            }
+        }
+
+        function togglePlay() {
+            if (filteredTracks.length === 0 || filteredTracks[songIndex].isLocked) return;
+            if (audioPlayer.paused) {
+                audioPlayer.play().then(() => {
+                    playBtn.innerText = "⏸";
+                    discImg.classList.add('is-playing');
+                });
+            } else {
+                audioPlayer.pause();
+                playBtn.innerText = "▶";
+                discImg.classList.remove('is-playing');
+            }
         }
 
         function nextSong() {
             let nextIdx = songIndex + 1;
-            if (nextIdx >= currentTracksList.length) nextIdx = 0;
-            if (currentTracksList[nextIdx].isLocked) {
-                nextIdx = nextIdx + 1 >= currentTracksList.length ? 0 : nextIdx + 1;
-            }
+            if(nextIdx >= filteredTracks.length) nextIdx = 0;
+            if(filteredTracks[nextIdx] && filteredTracks[nextIdx].isLocked) nextIdx = 0;
             loadSong(nextIdx, true);
         }
 
         function prevSong() {
             let prevIdx = songIndex - 1;
-            if (prevIdx < 0) prevIdx = currentTracksList.length - 1;
-            if (currentTracksList[prevIdx].isLocked) {
-                prevIdx = prevIdx - 1 < 0 ? currentTracksList.length - 1 : prevIdx - 1;
+            if(prevIdx < 0) prevIdx = filteredTracks.length - 1;
+            while(filteredTracks[prevIdx] && filteredTracks[prevIdx].isLocked && prevIdx > 0) {
+                prevIdx--;
             }
             loadSong(prevIdx, true);
         }
 
-        audioPlayer.addEventListener('ended', nextSong);
-        window.addEventListener('DOMContentLoaded', initRadioPage);
+        function switchCategory(category) {
+            if(activeCategory === category) return;
+            activeCategory = category;
+
+            document.getElementById('tab-event').classList.toggle('tab-active', category === 'event');
+            document.getElementById('tab-farm').classList.toggle('tab-active', category === 'farm');
+
+            renderPlaylist();
+            loadSong(0, false);
+        }
+
+        audioPlayer.addEventListener('ended', () => { nextSong(); });
+
+        function forceDownloadMusic(url, filename, idx) {
+            event.stopPropagation();
+            const textSpan = document.getElementById(`btn-dl-text-${idx}`);
+            const btnEl = document.getElementById(`btn-dl-act-${idx}`);
+            const local = radioLocalization[currentLocalKey];
+
+            if(!url) return;
+            
+            btnEl.classList.add('loading');
+            textSpan.innerText = local.downloading;
+
+            fetch(url)
+                .then(response => response.blob())
+                .then(blob => {
+                    const blobUrl = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.style.display = 'none';
+                    a.href = blobUrl;
+                    a.download = filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(blobUrl);
+                    document.body.removeChild(a);
+                })
+                .catch(() => alert('Download failed.'))
+                .finally(() => {
+                    btnEl.classList.remove('loading');
+                    textSpan.innerText = local.downloadBtn;
+                });
+        }
+
+        window.onload = initRadioPage;
     </script>
 </body></html>
